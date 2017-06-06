@@ -8,7 +8,7 @@
 
 # We'll also have to install Cloudinary. We'll use Cloudinary as the host for our images.
 
-# sudo apt-get install cloudinary
+# sudo easy_install cloudinary
 
 from time import sleep
 
@@ -19,18 +19,31 @@ from cloudinary.uploader import upload, destroy
 
 import picamera
 camera = picamera.PiCamera()
+camera.vflip = True
+
+# You'll need to create a 'credentials.json' file with your Cloudinary credentials stored inside it as JSON.
+
+from credentials import Credentials
+
+cred = Credentials()
+
+cloud_name = cred.retrieveByKey('cloud_name')
+api_key = cred.retrieveByKey('api_key')
+api_secret = cred.retrieveByKey('api_secret')
 
 config = cloudinary.config(
-    cloud_name='ds1fs8ef4',
-    api_key='794785675884621',
-    api_secret='GPZz7t9rp0eaTUceJFA36lGcn9M'
+    cloud_name=cloud_name,
+    api_key=api_key,
+    api_secret=api_secret
 )
 
 def uploadFile(fileName):
+    r = upload(fileName)
     try:
         response = upload(fileName)
         return response["url"]
-    except:
+    except Exception as e:
+	print("Failed to image file with error: " + str(e))
         return False
 
 while True:
@@ -40,13 +53,13 @@ while True:
     camera.capture(fileName)
 
     imageURL = uploadFile(fileName)
-
     uploadURL = 'http://gzamfirecps.pythonanywhere.com/api/updateImage'
 
     if imageURL:
         payload = {'url': imageURL}
         result = requests.post(uploadURL, json=payload)
+	print("Image upload successful!")
     else:
-        print("File upload failed!")
+        print("Image upload failed!")
 
     sleep(15)
