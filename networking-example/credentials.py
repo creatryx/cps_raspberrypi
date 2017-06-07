@@ -17,7 +17,9 @@ class Credentials:
             print(e)
 
     def retrieveByKey(self, key):
-
+        
+        assert self.keysRetrieved, "Credentials file not successfully parsed."
+        
         value = False
 
         try:
