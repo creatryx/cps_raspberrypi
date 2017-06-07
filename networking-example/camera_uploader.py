@@ -22,7 +22,6 @@ camera = picamera.PiCamera()
 camera.vflip = True
 
 # You'll need to create a 'credentials.json' file with your Cloudinary credentials stored inside it as JSON.
-
 from credentials import Credentials
 
 cred = Credentials()
@@ -53,6 +52,7 @@ while True:
     camera.capture(fileName)
 
     imageURL = uploadFile(fileName)
+    # replace this URL with your PythonAnywhere URL for uploading
     uploadURL = 'http://gzamfirecps.pythonanywhere.com/api/updateImage'
 
     if imageURL:
