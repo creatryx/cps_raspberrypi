@@ -1,0 +1,46 @@
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script>
+
+        $(function() {
+
+            var count = $("#counter").attr("count");
+            console.log(count);
+
+            for (var i = 0; i < count; i++) {
+                $("img#" + i).hide();
+            }
+
+            var currentIndex = 0;
+
+            setInterval(
+                function() {
+
+                    if (currentIndex >= count) {
+                        currentIndex = 0;
+                    }
+                    var nextImageURL = $("img#" + currentIndex).attr('src');
+                    $('#current').attr('src', nextImageURL)
+
+                    currentIndex++;
+
+                }, 100);
+
+            setInterval(
+                function() {
+                    location.reload();
+                }, 10000);
+
+        });
+
+    </script>
+</head>
+
+<body>
+    <div id="counter" count={{ imagesCount }}> {{ imagesCount }} images to display! </div><br>
+    <img id='current' style='transform: rotate(90deg)' src='' alt='Images should appear here...'><br>
+    {% for imageObject in imageObjects %}
+        <img id={{ imageObject.count }} role="preload" src={{ imageObject.url }} alt="Raspberry Pi Image Goes Here!"><br>
+    {% endfor %}
+</body>
+
