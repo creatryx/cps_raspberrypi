@@ -1,15 +1,3 @@
-# Begin by installing the camera module to get access to the Pi's onboard camera:
-
-# sudo apt-get update
-
-# sudo apt-get install python3-picamera
-# OR
-# sudo apt-get install python-picamera
-
-# We'll also have to install Cloudinary. We'll use Cloudinary as the host for our images.
-
-# sudo easy_install cloudinary
-
 from time import sleep
 
 import requests
