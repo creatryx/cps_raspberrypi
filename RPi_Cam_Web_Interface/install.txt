@@ -1,0 +1,192 @@
++++ readlink -f ./install.sh
+++ dirname /home/pi/RPi_Cam_Web_Interface/install.sh
++ cd /home/pi/RPi_Cam_Web_Interface
+++ dpkg-query -W '-f=${Status}' dialog
+++ grep -c 'ok installed'
++ '[' 0 -eq 0 ']'
++ sudo apt-get install -y dialog
++ color_red='tput setaf 1'
++ color_green='tput setaf 2'
++ color_reset='tput sgr0'
++ versionfile=./www/config.php
+++ cat ./www/config.php
+++ cut -d \' -f4
+++ grep ''\''APP_VERSION'\'''
++ version=v6.3.8
++ backtitle='Copyright (c) 2015, Bob Tidey. RPi Cam v6.3.8'
++ '[' '!' -e ./config.txt ']'
++ sudo echo '#This is config file for main installer. Put any extra options in here.'
++ sudo echo 'rpicamdir="html"'
++ sudo echo 'webserver="apache"'
++ sudo echo 'webport="80"'
++ sudo echo 'user=""'
++ sudo echo 'webpasswd=""'
++ sudo echo 'autostart="yes"'
++ sudo echo ''
++ sudo chmod 664 ./config.txt
++ source ./config.txt
+++ rpicamdir=html
+++ webserver=apache
+++ webport=80
+++ user=
+++ webpasswd=
+++ autostart=yes
++ rpicamdirold=html
++ '[' '!' h == '' ']'
++ rpicamdirold=/html
++ rm exitfile.txt
++ '[' 0 -eq 0 ']'
++ exec
++ read -r rpicamdir
++ dialog --separate-widget '
+' --title 'Configuration Options' --backtitle 'Copyright (c) 2015, Bob Tidey. RPi Cam v6.3.8' --form '' 0 0 0 'Cam subfolder:' 1 1 html 1 32 15 0 'Autostart:(yes/no)' 2 1 yes 2 32 15 0 'Server:(apache/nginx/lighttpd)' 3 1 apache 3 32 15 0 Webport: 4 1 80 4 32 15 0 'User:(blank=nologin)' 5 1 '' 5 32 15 0 Password: 6 1 '' 6 32 15 0
++ read -r autostart
++ read -r webserver
++ read -r webport
++ read -r user
++ read -r webpasswd
++ '[' -n 80 ']'
++ sudo echo '#This is edited config file for main installer. Put any extra options in here.'
++ sudo echo 'rpicamdir="xLab-3D"'
++ sudo echo 'webserver="apache"'
++ sudo echo 'webport="80"'
++ sudo echo 'user="xLab"'
++ sudo echo 'webpasswd="prep2017"'
++ sudo echo 'autostart="yes"'
++ sudo echo ''
++ exec
++ '[' -e exitfile.txt ']'
++ source ./config.txt
+++ rpicamdir=xLab-3D
+++ webserver=apache
+++ webport=80
+++ user=xLab
+++ webpasswd=prep2017
+++ autostart=yes
++ '[' '!' x == '' ']'
++ rpicamdirEsc='\/xLab-3D'
++ rpicamdir=/xLab-3D
++ fn_stop
++ sudo killall raspimjpeg
++ sudo killall php
++ sudo killall motion
++ sudo mkdir -p /var/www/xLab-3D/media
++ '[' '!' /xLab-3D == /html ']'
++ '[' -e /var/www/html/index.php ']'
++ sudo cp -r www/cam_get.php www/cam_pic_new.php www/cam_pic.php www/cmd_func.php www/cmd_pipe.php www/config.php www/convertCmd.txt www/Copyright.txt www/css www/delete.png www/fonts www/image.png www/index.php www/js www/loading.jpg www/macros www/min.php www/motion.php www/multiview.html www/multiview.jsonD www/multiview.php www/pilight_off www/pipan_off www/pipan.php www/preview.php www/raspizip.sh www/schedule.php www/servo_off www/status_mjpeg.php www/status_mjpeg.txt www/timelapse.png www/unavailable.jpg www/updating.jpg www/uPresetsN-IMX219.html www/uPresetsN-OV5647.html www/uPresetsP-IMX219.html www/uPresetsP-OV5647.html www/uPresetsv2.html www/video.png /var/www/xLab-3D/
++ '[' -e /var/www/xLab-3D/index.html ']'
++ '[' apache == apache ']'
++ sudo apt-get install -y apache2 php5 php5-cli libapache2-mod-php5 gpac motion zip libav-tools gstreamer1.0-tools
++ fn_apache
++ aconf=etc/apache2/sites-available/raspicam.conf
++ cp etc/apache2/sites-available/raspicam.conf.1 etc/apache2/sites-available/raspicam.conf
++ '[' -e '\/etc/apache2/sites-available/raspicam.conf' ']'
++ '[' -e /etc/apache2/conf-available/other-vhosts-access-log.conf ']'
++ aotherlog=/etc/apache2/conf-available/other-vhosts-access-log.conf
+++ mktemp
++ tmpfile=/tmp/tmp.y1K1faISxn
++ sudo awk '/NameVirtualHost \*:/{c+=1}{if(c==1){sub("NameVirtualHost \*:.*","NameVirtualHost *:80",$0)};print}' /etc/apache2/ports.conf
++ sudo mv /tmp/tmp.y1K1faISxn /etc/apache2/ports.conf
++ sudo awk '/Listen/{c+=1}{if(c==1){sub("Listen.*","Listen 80",$0)};print}' /etc/apache2/ports.conf
++ sudo mv /tmp/tmp.y1K1faISxn /etc/apache2/ports.conf
++ awk '/<VirtualHost \*:/{c+=1}{if(c==1){sub("<VirtualHost \*:.*","<VirtualHost *:80>",$0)};print}' etc/apache2/sites-available/raspicam.conf
++ sudo mv /tmp/tmp.y1K1faISxn etc/apache2/sites-available/raspicam.conf
++ sudo sed -i 's/<Directory\ \/var\/www\/.*/<Directory\ \/var\/www\/xLab-3D>/g' etc/apache2/sites-available/raspicam.conf
++ '[' xLab == '' ']'
++ sudo htpasswd -b -c /usr/local/.htpasswd xLab prep2017
++ sudo sed -i 's/AllowOverride\ .*/AllowOverride All/g' etc/apache2/sites-available/raspicam.conf
++ '[' '!' -e /var/www/xLab-3D/.htaccess ']'
++ sudo bash -c 'cat > /var/www/xLab-3D/.htaccess'
++ sudo chown -R www-data:www-data /var/www/xLab-3D/.htaccess
++ sudo mv etc/apache2/sites-available/raspicam.conf /etc/apache2/sites-available/raspicam.conf
++ '[' '!' -e /etc/apache2/sites-enabled/raspicam.conf ']'
++ sudo ln -sf /etc/apache2/sites-available/raspicam.conf /etc/apache2/sites-enabled/raspicam.conf
++ sudo sed -i 's/^CustomLog/#CustomLog/g' /etc/apache2/conf-available/other-vhosts-access-log.conf
++ sudo a2dissite 000-default.conf
++ sudo service apache2 restart
++ sudo sed -i 's/^www-data:x.*/www-data:x:33:33:www-data:\/var\/www:\/bin\/bash/g' /etc/passwd
++ '[' '!' -e /var/www/xLab-3D/FIFO ']'
++ sudo mknod /var/www/xLab-3D/FIFO p
++ sudo chmod 666 /var/www/xLab-3D/FIFO
++ '[' '!' -e /var/www/xLab-3D/FIFO11 ']'
++ sudo mknod /var/www/xLab-3D/FIFO11 p
++ sudo chmod 666 /var/www/xLab-3D/FIFO11
++ '[' '!' -e /var/www/xLab-3D/FIFO1 ']'
++ sudo mknod /var/www/xLab-3D/FIFO1 p
++ sudo chmod 666 /var/www/xLab-3D/FIFO1
++ sudo chmod 755 /var/www/xLab-3D/raspizip.sh
++ '[' '!' -d /dev/shm/mjpeg ']'
++ mkdir /dev/shm/mjpeg
++ '[' '!' -e /var/www/xLab-3D/cam.jpg ']'
++ sudo ln -sf /dev/shm/mjpeg/cam.jpg /var/www/xLab-3D/cam.jpg
++ '[' -e /var/www/xLab-3D/status_mjpeg.txt ']'
++ sudo rm /var/www/xLab-3D/status_mjpeg.txt
++ '[' '!' -e /dev/shm/mjpeg/status_mjpeg.txt ']'
++ echo -n halted
++ sudo chown www-data:www-data /dev/shm/mjpeg/status_mjpeg.txt
++ sudo ln -sf /dev/shm/mjpeg/status_mjpeg.txt /var/www/xLab-3D/status_mjpeg.txt
++ sudo chown -R www-data:www-data /var/www/xLab-3D
++ sudo cp etc/sudoers.d/RPI_Cam_Web_Interface /etc/sudoers.d/
++ sudo chmod 440 /etc/sudoers.d/RPI_Cam_Web_Interface
++ sudo cp -r bin/raspimjpeg /opt/vc/bin/
++ sudo chmod 755 /opt/vc/bin/raspimjpeg
++ '[' '!' -e /usr/bin/raspimjpeg ']'
++ sudo ln -s /opt/vc/bin/raspimjpeg /usr/bin/raspimjpeg
++ sed -e 's/www/www\/xLab-3D/' etc/raspimjpeg/raspimjpeg.1
+++ cat /proc/cmdline
+++ awk -v 'RS= ' -F= '/boardrev/ { print $2 }'
++ [[ '' == \0\x\1\1 ]]
++ '[' -e /etc/raspimjpeg ']'
++ sudo cp -r etc/raspimjpeg/raspimjpeg /etc/
++ sudo chmod 644 /etc/raspimjpeg
++ '[' '!' -e /var/www/xLab-3D/raspimjpeg ']'
++ sudo ln -s /etc/raspimjpeg /var/www/xLab-3D/raspimjpeg
++ sudo usermod -a -G video www-data
++ '[' -e /var/www/xLab-3D/uconfig ']'
++ fn_motion
++ sudo sed -i 's/^; netcam_url.*/netcam_url/g' /etc/motion/motion.conf
++ sudo sed -i 's/^netcam_url.*/netcam_url http:\/\/localhost:80\/xLab-3D\/cam_pic.php/g' /etc/motion/motion.conf
++ '[' xLab == '' ']'
++ sudo sed -i 's/^; netcam_userpass.*/netcam_userpass/g' /etc/motion/motion.conf
++ sudo sed -i 's/^netcam_userpass.*/netcam_userpass xLab:prep2017/g' /etc/motion/motion.conf
++ sudo sed -i 's/^; on_event_start.*/on_event_start/g' /etc/motion/motion.conf
++ sudo sed -i 's/^on_event_start.*/on_event_start echo -n \'\''1\'\'' >\/var\/www\/xLab-3D\/FIFO1/g' /etc/motion/motion.conf
++ sudo sed -i 's/^; on_event_end.*/on_event_end/g' /etc/motion/motion.conf
++ sudo sed -i 's/^on_event_end.*/on_event_end echo -n \'\''0\'\'' >\/var\/www\/xLab-3D\/FIFO1/g' /etc/motion/motion.conf
++ sudo sed -i 's/control_port.*/control_port 6642/g' /etc/motion/motion.conf
++ sudo sed -i 's/control_html_output.*/control_html_output off/g' /etc/motion/motion.conf
++ sudo sed -i 's/^output_pictures.*/output_pictures off/g' /etc/motion/motion.conf
++ sudo sed -i 's/^ffmpeg_output_movies on/ffmpeg_output_movies off/g' /etc/motion/motion.conf
++ sudo sed -i 's/^ffmpeg_cap_new on/ffmpeg_cap_new off/g' /etc/motion/motion.conf
++ sudo sed -i 's/^stream_port.*/stream_port 0/g' /etc/motion/motion.conf
++ sudo sed -i 's/^webcam_port.*/webcam_port 0/g' /etc/motion/motion.conf
++ sudo sed -i 's/^process_id_file/; process_id_file/g' /etc/motion/motion.conf
++ sudo sed -i 's/^videodevice/; videodevice/g' /etc/motion/motion.conf
++ sudo sed -i 's/^event_gap 60/event_gap 3/g' /etc/motion/motion.conf
++ sudo chown motion:www-data /etc/motion/motion.conf
++ sudo chmod 664 /etc/motion/motion.conf
++ fn_autostart
+++ mktemp
++ tmpfile=/tmp/tmp.3ZiAzu6qK6
++ sudo sed /#START/,/#END/d /etc/rc.local
++ sudo mv /tmp/tmp.3ZiAzu6qK6 /etc/rc.local
++ sudo awk '!NF {if (++n <= 1) print; next}; {n=0;print}' /etc/rc.local
++ sudo mv /tmp/tmp.3ZiAzu6qK6 /etc/rc.local
++ '[' yes == yes ']'
++ grep -Fq '#START RASPIMJPEG SECTION' /etc/rc.local
++ sudo sed -i '/exit 0/d' /etc/rc.local
++ sudo bash -c 'cat >> /etc/rc.local'
++ sudo chown root:root /etc/rc.local
++ sudo chmod 755 /etc/rc.local
++ '[' -e /var/www/xLab-3D/uconfig ']'
++ '[' -e /var/www/xLab-3D/schedule.php ']'
++ sudo rm /var/www/xLab-3D/schedule.php
++ sudo sed -e 's/www/www\/xLab-3D/g' www/schedule.php
++ sudo mv www/schedule.php.1 /var/www/xLab-3D/schedule.php
++ sudo chown www-data:www-data /var/www/xLab-3D/schedule.php
++ '[' 0 -eq 0 ']'
++ fn_reboot
++ dialog --title 'Start camera system now' --backtitle 'Copyright (c) 2015, Bob Tidey. RPi Cam v6.3.8' --yesno 'Start now?' 5 33
++ response=0
++ case $response in
++ ./start.sh

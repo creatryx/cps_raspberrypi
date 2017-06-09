@@ -1,0 +1,8 @@
+#This is edited config file for main installer. Put any extra options in here.
+rpicamdir="xLab-3D"
+webserver="apache"
+webport="80"
+user="xLab"
+webpasswd="prep2017"
+autostart="yes"
+
